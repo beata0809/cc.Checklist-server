@@ -1,0 +1,28 @@
+{
+  "name": "cc-checklist-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "back": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beata0809/cc.Checklist-server.git"
+  },
+  "author": "Beata Żurowska, Pola Skibińska, Rafał Wolny, Piotr Pośpiech, Damian Ogrodnik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beata0809/cc.Checklist-server/issues"
+  },
+  "homepage": "https://github.com/beata0809/cc.Checklist-server#readme",
+  "dependencies": {
+    "config": "^3.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "mongoose": "^5.5.0",
+    "morgan": "^1.9.1"
+  }
+}
