@@ -7,6 +7,7 @@ const cors = require('cors');
 const app = express();
 
 const exampleRoutes = require('./routes/example');
+const projectRoutes = require('./routes/project');
 const taskRoutes = require('./routes/tasks');
 
 app.use(express.json());
@@ -19,7 +20,6 @@ if (app.get('env') === 'development') {
 }
 
 app.use('/api/example', exampleRoutes);
-app.use('/api/tasks', taskRoutes);
 
 const main = async () => {
     try{
