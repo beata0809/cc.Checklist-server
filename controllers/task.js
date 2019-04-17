@@ -1,4 +1,4 @@
-const { create, getAll } = require('../services/routing');
+const { create, getAll, getById, deleteById, updateModel, deleteModel } = require('../services/routing');
 const Task = require('../models/Task');
 
 const routes = {
@@ -6,22 +6,24 @@ const routes = {
         const data = req.body;
         create(res, Task, data)
     },
-
     getAll: async (req, res) => {
-        getAll(res, Task);   
+        getAll(res, Task) 
     },
     getTask: async (req, res) => {
         const { id } = req.params;
+        getById(res, Task, id)
+    },
+    deleteById: async (req, res) => {
+        const { id } = req.params;
+        deleteById(res, Task, id)
+    },
+    updateTask: async (req, res) => {
+        const { id } = req.params;
         const data = req.body;
-        getById(res, Task, data);
-    }
-    update: async (req, res) => {
-        const data = req.body;
-        update(res, Task, data);
-    }
-    remove: async (req, res) => {
-        const data = req.body;
-        remove(res, Task, data);
+        updateModel(res, Task, data, id)
+    },
+    deleteTask: async (req, res) => {
+       deleteModel(res, Task)
     }
 };
 
