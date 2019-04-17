@@ -7,6 +7,7 @@ const cors = require('cors');
 const app = express();
 
 const exampleRoutes = require('./routes/example');
+const listRoutes = require('./routes/list')
 const projectRoutes = require('./routes/project');
 
 app.use(express.json());
@@ -18,7 +19,9 @@ if (app.get('env') === 'development') {
     console.info('Morgan enabled');
 }
 
+
 app.use('/api/example', exampleRoutes);
+app.use('/api/list', listRoutes);
 app.use('/api/projects', projectRoutes);
 
 const main = async () => {
