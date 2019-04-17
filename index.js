@@ -20,6 +20,7 @@ if (app.get('env') === 'development') {
 }
 
 app.use('/api/example', exampleRoutes);
+app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
 
 const main = async () => {
