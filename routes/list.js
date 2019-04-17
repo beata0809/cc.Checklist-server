@@ -5,7 +5,9 @@ const router = express.Router();
 
 router.post('/', listController.routes.create);
 router.get('/', listController.routes.getAll);
-router.delete('/', listController.routes.del);
-router.put('/', listController.routes.put)
+router.get('/:id', listController.routes.getById);
+router.delete('/:id', listController.routes.deleteById);
+router.delete('/', listController.routes.deleteModel);
+router.put('/:id', listController.routes.updateModel)
 
 module.exports = router;

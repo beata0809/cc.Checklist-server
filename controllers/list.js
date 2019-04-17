@@ -1,4 +1,4 @@
-const { put ,del , create, getAll } = require('../services/routing');
+const {create, getAll, getById, deleteById, updateModel, deleteModel} = require('../services/routing');
 const List = require('../models/List');
 
 const routes = {
@@ -9,16 +9,23 @@ const routes = {
     getAll: async (req, res) => {
         getAll(res, List);   
     },
-    del: async (req, res) =>{
-        const data = req.body;
-        del(res,List, data);
+    getById: async (req, res) => {
+        const {id} = req.params
+        getById(res, List, id);
     },
-    put: async (req, res) => {
+    deleteById: async (req, res) => {
+            const {id} = req.params
+            deleteById(res, List, id);
+        },
+    updateModel: async (req, res) => {
         const data = req.body;
-        put(res, List, data);
+        const {id} = req.params;
+        updateModel(res, List, data, id);
+    },
+    deleteModel: async (req, res) => {
+        deleteModel(res, List);
     }
 };
-
 module.exports = {
     routes,
 };

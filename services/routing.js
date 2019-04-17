@@ -19,25 +19,7 @@ exports.getAll = async (res, Model) => {
         res.sendStatus(500);
     }
 }
-exports.del = async (res, Model, data) => {
-    try{
-    id = data.id
-    const model = await Model.deleteOne({_id: id});
-    Model.findByIdAndRemove(id)
-    res.send(model) 
-    } catch (ex) {
-        console.error(ex);
-        res.sendStatus(500);
-    }
-}
-exports.put = async (res, Model, data) => {
-    try {
-        res.status(200).send('zmiana');
-    } catch (ex) {
-        console.error(ex);
-        res.sendStatus(500);
-    }
-}
+
 exports.getById = async (res,Model,id) => {
     try{
         const modelInstance= await Model.findById(id);
