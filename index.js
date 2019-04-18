@@ -21,7 +21,7 @@ if (app.get('env') === 'development') {
 
 
 app.use('/api/example', exampleRoutes);
-app.use('/api/list', listRoutes);
+app.use('/api/lists', listRoutes);
 app.use('/api/projects', projectRoutes);
 
 const main = async () => {
