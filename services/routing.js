@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 exports.create = async (res, Model, data) =>{
     const model = new Model(data);
@@ -65,3 +66,36 @@ exports.deleteModel =async(res,Model) => {
     }
 }
 
+////////////
+exports.validate = async (res, Model, data) => {
+    try {
+        const user = await Model.findOne({'email' : data.email});
+        if (!user) return res.status(400).send('Invalid email or password.');
+
+        const validPassword = await bcrypt.compare(data.password, user.password);
+        //const validPassword = (data.password===user.password);
+        //console.log(data.password + ' ' + user.password);
+        if (!validPassword) return res.status(400).send('Invalid email or password.');
+
+        //res.status(200).send(user);
+        res.status(200).send(true);
+    } catch (ex) {
+        console.log(ex);
+        res.sendStatus(500);
+    }
+}
+
+exports.createUser = async (res, Model, data) => {
+    const user = new Model();
+    user.email = data.email;
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(data.password, salt);
+
+    try {
+        const result = await user.save();
+        res.status(200).send(result);
+    } catch (ex) {
+        console.error(ex);
+        res.sendStatus(500);
+    }
+}
