@@ -8,8 +8,8 @@ const projectSchema = new Schema({
         required: true
     },
     lists: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Lists'
+        type: Schema.ObjectId,
+        ref: 'List'
     }]
 });
 
