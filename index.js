@@ -23,7 +23,7 @@ if (app.get('env') === 'development') {
 
 
 app.use('/api/example', exampleRoutes);
-app.use('/api/list', listRoutes);
+app.use('/api/lists', listRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/auth', auth);

@@ -1,4 +1,4 @@
-const { create, getAll, getById, deleteById, updateModel, deleteModel } = require('../services/routing');
+const { create, getAllProjects, getProjectById, deleteById, updateModel, deleteModel } = require('../services/routing');
 const Project = require('../models/Project');
 
 const routes = {
@@ -8,12 +8,12 @@ const routes = {
     },
 
     getAll: async (req, res) => {
-        getAll(res, Project);
+        getAllProjects(res, Project);
     },
 
     getById: async (req, res) => {
         const { id } = req.params;
-        getById(res, Project, id);
+        getProjectById(res, Project, id);
     },
 
     deleteById: async (req, res) => {

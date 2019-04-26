@@ -11,6 +11,7 @@ exports.create = async (res, Model, data) => {
     res.sendStatus(500);
   }
 };
+
 exports.getAll = async (res, Model) => {
   try {
     const model = await Model.find();
@@ -21,6 +22,18 @@ exports.getAll = async (res, Model) => {
   }
 };
 
+
+exports.getAllProjects = async (res, Model) => {
+    try {
+        const model = await Model.find()
+        .populate('lists', 'title tasks');
+        res.status(200).send(model);
+    } catch (ex) {
+        console.error(ex);
+        res.sendStatus(500);
+    }
+}
+
 exports.getById = async (res, Model, id) => {
   try {
     const modelInstance = await Model.findById(id);
@@ -30,6 +43,17 @@ exports.getById = async (res, Model, id) => {
     res.sendStatus(500);
   }
 };
+
+exports.getProjectById = async (res,Model,id) => {
+    try{
+        const modelInstance= await Model.findById(id)
+        .populate('lists', 'title tasks');
+        res.status(200).send(modelInstance);
+    } catch (ex){
+        console.log(ex);
+        res.sendStatus(500);
+    }
+}
 
 exports.deleteById = async (res, Model, id) => {
   try {
@@ -65,7 +89,6 @@ exports.deleteModel = async (res, Model) => {
   }
 };
 
-////////////
 exports.validate = async (res, Model, data) => {
   try {
     const user = await Model.findOne({ email: data.email });
