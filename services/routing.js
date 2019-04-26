@@ -22,21 +22,32 @@ exports.getAll = async (res, Model) => {
   }
 };
 
-
 exports.getAllProjects = async (res, Model) => {
-    try {
-        const model = await Model.find()
-        .populate('lists', 'title tasks');
-        res.status(200).send(model);
-    } catch (ex) {
-        console.error(ex);
-        res.sendStatus(500);
-    }
-}
+  try {
+    const model = await Model.find().populate("lists", "title tasks");
+    res.status(200).send(model);
+  } catch (ex) {
+    console.error(ex);
+    res.sendStatus(500);
+  }
+};
 
 exports.getById = async (res, Model, id) => {
   try {
-    const modelInstance = await Model.findById(id);
+    const modelInstance = await Model.findById(id).populate({
+      path: "projects",
+      select: "title lists",
+      populate: {
+        path: "lists",
+        model: "List",
+        select: "title tasks",
+        populate: {
+          path: "tasks",
+          model: "Task",
+          select: "name done"
+        }
+      }
+    });
     res.status(200).send(modelInstance);
   } catch (ex) {
     console.log(ex);
@@ -44,16 +55,18 @@ exports.getById = async (res, Model, id) => {
   }
 };
 
-exports.getProjectById = async (res,Model,id) => {
-    try{
-        const modelInstance= await Model.findById(id)
-        .populate('lists', 'title tasks');
-        res.status(200).send(modelInstance);
-    } catch (ex){
-        console.log(ex);
-        res.sendStatus(500);
-    }
-}
+exports.getProjectById = async (res, Model, id) => {
+  try {
+    const modelInstance = await Model.findById(id).populate(
+      "lists",
+      "title tasks"
+    );
+    res.status(200).send(modelInstance);
+  } catch (ex) {
+    console.log(ex);
+    res.sendStatus(500);
+  }
+};
 
 exports.deleteById = async (res, Model, id) => {
   try {
