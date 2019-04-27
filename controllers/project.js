@@ -1,36 +1,48 @@
-const { create, getAllProjects, getProjectById, deleteById, updateModel, deleteModel } = require('../services/routing');
-const Project = require('../models/Project');
+const {
+  create,
+  getAllProjects,
+  getProjectById,
+  deleteById,
+  updateModel,
+  deleteModel,
+  addProject
+} = require("../services/routing");
+const Project = require("../models/Project");
 
 const routes = {
-    create: async (req, res) => {
-        const data = req.body;
-        create(res, Project, data);
-    },
+  create: async (req, res) => {
+    const data = req.body;
+    create(res, Project, data);
+  },
 
-    getAll: async (req, res) => {
-        getAllProjects(res, Project);
-    },
+  addProject: async (req, res) => {
+    const data = req.body;
+    addProject(res, data);
+  },
 
-    getById: async (req, res) => {
-        const { id } = req.params;
-        getProjectById(res, Project, id);
-    },
+  getAll: async (req, res) => {
+    getAllProjects(res, Project);
+  },
 
-    deleteById: async (req, res) => {
-        const { id } = req.params;
-        deleteById(res, Project, id);
-    },
+  getById: async (req, res) => {
+    const { id } = req.params;
+    getProjectById(res, Project, id);
+  },
 
-    updateModel: async (req, res) => {
-        const data = req.body;
-        const { id } = req.params;
-        updateModel(res, Project, data, id);
-    },
+  deleteById: async (req, res) => {
+    const { id } = req.params;
+    deleteById(res, Project, id);
+  },
 
-    deleteModel: async (req, res) => {
-        deleteModel(res, Project);
-    }
+  updateModel: async (req, res) => {
+    const data = req.body;
+    const { id } = req.params;
+    updateModel(res, Project, data, id);
+  },
 
+  deleteModel: async (req, res) => {
+    deleteModel(res, Project);
+  }
 };
 
 module.exports = { routes };

@@ -1,10 +1,42 @@
-const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const User = require("../models/User");
+const Project = require("../models/Project");
+const List = require("../models/List");
 
 exports.create = async (res, Model, data) => {
   const model = new Model(data);
   try {
     const result = await model.save();
+    res.status(200).send(result);
+  } catch (ex) {
+    console.error(ex);
+    res.sendStatus(500);
+  }
+};
+
+exports.addProject = async (res, data) => {
+  const project = new Project(data.project);
+  try {
+    const result = await project.save();
+    const user = await User.findById(data.userId);
+    user.projects.push(result._id);
+    await user.save();
+
+    res.status(200).send(result);
+  } catch (ex) {
+    console.error(ex);
+    res.sendStatus(500);
+  }
+};
+
+exports.addList = async (res, data) => {
+  const list = new List(data.list);
+  try {
+    const result = await list.save();
+    const project = await Project.findById(data.projectId);
+    project.lists.push(result._id);
+    await project.save();
+
     res.status(200).send(result);
   } catch (ex) {
     console.error(ex);
@@ -24,7 +56,7 @@ exports.getAll = async (res, Model) => {
 
 exports.getAllProjects = async (res, Model) => {
   try {
-    const model = await Model.find().populate("lists", "title tasks");
+    const model = await Model.find();
     res.status(200).send(model);
   } catch (ex) {
     console.error(ex);
@@ -36,7 +68,7 @@ exports.getById = async (res, Model, id) => {
   try {
     const modelInstance = await Model.findById(id).populate({
       path: "projects",
-      select: "title lists",
+      select: "title lists _id",
       populate: {
         path: "lists",
         model: "List",
