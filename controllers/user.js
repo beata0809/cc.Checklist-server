@@ -8,34 +8,15 @@ const {
   deleteModel
 } = require("../services/routing");
 const User = require("../models/User");
-const Joi = require("joi");
+const { validateUser, handleErros } = require('../validators/validateUser')
 
 const routes = {
   createUser: async (req, res) => {
     const data = req.body;
-    const schema = {
-      name: Joi.string().required(),
-      email: Joi.string().email(),
-      password: Joi.string()
-        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
-        .required()
-    };
-    const result = Joi.validate(data, schema);
+    const result = validateUser(data);
     if (result.error) {
-      console.log(result.error.details[0].type);
-      if (result.error.details[0].type === "string.email") {
-        res.status(400).send("Invalid email address.");
-        return;
-      } else {
-        res
-          .status(400)
-          .send(
-            "The password must be at least 8 characters and contain: uppercase, lowercase, digit, special character."
-          );
-        return;
-      }
+      res.status(400).send(handleErros(result.error));
     }
-
     createUser(res, User, data);
   },
   getAll: async (req, res) => {
