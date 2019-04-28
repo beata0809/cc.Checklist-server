@@ -167,13 +167,13 @@ exports.validate = async (res, Model, data) => {
 };
 
 exports.createUser = async (res, Model, data) => {
-  const user = new Model();
-  user.email = data.email;
+  const user = new Model(data);
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(data.password, salt);
 
   try {
     const result = await user.save();
+    console.log(result);
     res.status(200).send(result);
   } catch (ex) {
     console.error(ex);
