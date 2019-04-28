@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Project = require("../models/Project");
 const List = require("../models/List");
+const Task = require("../models/Task");
 
 exports.create = async (res, Model, data) => {
   const model = new Model(data);
@@ -36,6 +37,21 @@ exports.addList = async (res, data) => {
     const project = await Project.findById(data.projectId);
     project.lists.push(result._id);
     await project.save();
+
+    res.status(200).send(result);
+  } catch (ex) {
+    console.error(ex);
+    res.sendStatus(500);
+  }
+};
+
+exports.addTask = async (res, data) => {
+  const task = new Task(data.task);
+  try {
+    const result = await task.save();
+    const list = await List.findById(data.listId);
+    list.tasks.push(result._id);
+    await list.save();
 
     res.status(200).send(result);
   } catch (ex) {
