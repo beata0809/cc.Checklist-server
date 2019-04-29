@@ -7,6 +7,9 @@
     "start": "node index",
     "back": "nodemon index.js"
   },
+  "engines": {
+    "node": "11.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/beata0809/cc.Checklist-server.git"
