@@ -12,6 +12,7 @@ const projectRoutes = require('./routes/project');
 const taskRoutes = require('./routes/task');
 const userRoutes = require('./routes/user');
 const auth = require('./routes/auth');
+const compression = require('compression');
 
 app.use(express.json());
 app.use(helmet());
@@ -20,6 +21,8 @@ app.use(cors());
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
     console.info('Morgan enabled');
+} else {
+    app.use(compression());
 }
 
 
@@ -31,7 +34,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', auth);
 
 const main = async () => {
-    try{
+    try {
         await mongoose.connect(config.get('MONGO_URI'), { useNewUrlParser: true })
         console.info('Connected to database...');
 
