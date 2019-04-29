@@ -39,7 +39,7 @@ const main = async () => {
         console.info('Connected to database...');
 
         const port = process.env.PORT || 5000;
-        app.listen(port, () => console.info(`Listening on port ${port}`));
+        app.listen(process.env.PORT);
     } catch (ex) {
         console.error(ex);
     }
