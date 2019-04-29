@@ -35,11 +35,11 @@ app.use('/api/auth', auth);
 
 const main = async () => {
     try {
-        await mongoose.connect("mongodb://coders:coderscamp2019@ds135776.mlab.com:35776/heroku_2b7c9tfz", { useNewUrlParser: true })
+        await mongoose.connect(config.get('MONGO_URI'), { useNewUrlParser: true })
         console.info('Connected to database...');
 
         const port = process.env.PORT || 5000;
-        app.listen(process.env.PORT);
+        app.listen(port, () => console.info(`Listening on port ${port}`));
     } catch (ex) {
         console.error(ex);
     }
